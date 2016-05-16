@@ -1,0 +1,12 @@
+package ${package.dao};
+
+import ${package.model}.${package.modelName};
+
+/**
+ * @desc
+ * @author
+ */
+
+public interface ${package.daoName} {
+    List<${package.modelName}> example();
+}

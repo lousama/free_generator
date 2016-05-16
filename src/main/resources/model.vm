@@ -1,0 +1,24 @@
+package ${package.model};
+
+/**
+ * @desc
+ * @author
+ */
+
+public class ${package.modelName} {
+
+#foreach ($table in ${list})
+    private ${table.type} ${table.name};
+#end
+
+
+    @Override
+    public String toString(){
+        return "${package.modelName} : { "+
+      #foreach ($table in ${list})
+      "${table.name}='" + ${table.name} + "'," +
+      #end
+        "}";
+    }
+
+}
