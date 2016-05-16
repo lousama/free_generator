@@ -11,8 +11,6 @@ import java.util.List;
 public class Table {
     private String name;
     private String sql;
-    private String isInitQuery = ResourceUtil.getString("is_init_query");
-    private String initQuery= ResourceUtil.getString("init_query_name");
     private List<Column> columnList;
 
 

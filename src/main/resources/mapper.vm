@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="${package.dao}.${package.daoName}">
+
+    <resultMap type="${package.modelName}" id="resultMap"> 
+#foreach ($column in ${package.columnList})
+	<result property="${column.colName}" column="${column.dbColName}"/>
+#end 
+    </resultMap>
+    
+#if (${package.isInitQuery} == 'true')
+    <select id="${package.initQuery}" resultMap="resultMap">
+        ${package.initSql}
+    </select> 
+#end
+
+</mapper>

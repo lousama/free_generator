@@ -8,7 +8,9 @@ import com.lousama.generator.util.ResourceUtil;
 import com.lousama.generator.util.StringUtil;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by lousama on 5/16/16
@@ -36,7 +38,7 @@ public class ProcessData {
             //process package and fileName
             processPackage(table.getName(),pkg);
             //process column,parse column name to hump
-            processColumn(table.getColumnList(),pkg);
+            processColumn(table.getColumnList(),pkg,table.getName());
             pkgList.add(pkg);
         }
         return pkgList;
@@ -58,15 +60,30 @@ public class ProcessData {
     }
 
     /**
-     * process column name and type
+     * process column data
      * @param colList
      * @param pkg
+     * @param tbName
      */
-    private static void processColumn(List<Column> colList,Packages pkg){
+    private static void processColumn(List<Column> colList,Packages pkg,String tbName){
+    	Set<String> set = new HashSet<String>();
+    	StringBuilder builder = new StringBuilder("SELECT ");
         for(Column col : colList){
-            col.setColName(StringUtil.parseHumpName(col.getColName(),false,isHumpColumn));
-            col.setTypeName(ColumnUtil.parseColumnType(col.getTypeName(),col.getColSize(),col.getScale()));
+            col.setColName(StringUtil.parseHumpName(col.getDbColName(),false,isHumpColumn));
+            col.setImportClass(ColumnUtil.parseColumnType(col.getClassName(),col.getColSize(),col.getScale()));
+            String importClass = col.getImportClass();
+        	col.setClassName(importClass.indexOf(".") == -1 ? importClass : importClass.substring(importClass.lastIndexOf(".")+1));
+        	col.setImportClass(importClass.indexOf(".") == -1 ? "" : importClass);
+        	if(col.getImportClass() != null && !"".equals(col.getImportClass())){
+        		set.add(col.getImportClass());	
+        	}
+        	col.setSetMethod("set" + StringUtil.upperFirst(col.getColName()));
+        	col.setGetMethod("get" + StringUtil.upperFirst(col.getColName()));
+        	builder.append(col.getDbColName()).append(",");
         }
+        pkg.setInitSql(builder.deleteCharAt(builder.length()-1).toString() + " FROM " + tbName);
+        pkg.setImportSet(set);
         pkg.setColumnList(colList);
     }
+    
 }

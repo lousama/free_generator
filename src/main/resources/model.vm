@@ -1,22 +1,49 @@
 package ${package.model};
 
-/**
- * @desc
- * @author
- */
-
-public class ${package.modelName} {
-
-#foreach ($table in ${list})
-    private ${table.type} ${table.name};
+#foreach ($set in ${package.importSet})
+import ${set};
 #end
 
+#if(${package.isLombok} == 'true')
+import lombok.AllArgsConstructor;  
+import lombok.Data;  
+import lombok.NoArgsConstructor;  
+import lombok.extern.log4j.Log4j; 
+#end
+
+/**
+ * @desc
+ * @author ${package.author}
+ */
+
+#if(${package.isLombok} == 'true')
+@Data  
+@NoArgsConstructor  
+@AllArgsConstructor  
+@Log4j 
+#end
+public class ${package.modelName} {
+#foreach ($column in ${package.columnList})
+    private ${column.className} ${column.colName};
+#end
+
+#if(${package.isLombok} == 'false')
+#foreach ($column in ${package.columnList})
+    public ${column.className} ${column.getMethod} () {
+        return ${column.colName};
+    }
+    
+    public ${column.className} ${column.setMethod} (${column.className} ${column.colName}) {
+        this.${column.colName} = ${column.colName};
+    }
+#end
+#end	
 
     @Override
     public String toString(){
         return "${package.modelName} : { "+
-      #foreach ($table in ${list})
-      "${table.name}='" + ${table.name} + "'," +
+      #foreach ($column in ${package.columnList})
+      "${column.colName}='" + ${column.colName} + "'," +
       #end
         "}";
     }

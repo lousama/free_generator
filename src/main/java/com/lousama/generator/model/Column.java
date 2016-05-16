@@ -6,17 +6,55 @@ package com.lousama.generator.model;
  * @author lousama<me@lousama.com>
  */
 public class Column {
-    private String typeName;
+    private String className;
+    private String importClass;
+    private String dbColName;
     private String colName;
+    private String getMethod;
+    private String setMethod;
     private int colSize;
     private int scale;
+    
+    
+    
+    public String getDbColName() {
+		return dbColName;
+	}
 
-    public String getTypeName() {
-        return typeName;
+	public void setDbColName(String dbColName) {
+		this.dbColName = dbColName;
+	}
+
+	public String getGetMethod() {
+		return getMethod;
+	}
+
+	public void setGetMethod(String getMethod) {
+		this.getMethod = getMethod;
+	}
+
+	public String getSetMethod() {
+		return setMethod;
+	}
+
+	public void setSetMethod(String setMethod) {
+		this.setMethod = setMethod;
+	}
+
+	public String getImportClass() {
+		return importClass;
+	}
+
+	public void setImportClass(String importClass) {
+		this.importClass = importClass;
+	}
+
+	public String getClassName() {
+        return className;
     }
 
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
+    public void setClassName(String className) {
+        this.className = className;
     }
 
     public String getColName() {
@@ -46,7 +84,7 @@ public class Column {
     @Override
     public String toString() {
         return "Column{" +
-                "typeName='" + typeName + '\'' +
+                "typeName='" + className + '\'' +
                 ", colName='" + colName + '\'' +
                 ", colSize='" + colSize + '\'' +
                 ", scale=" + scale +

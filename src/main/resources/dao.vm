@@ -4,9 +4,11 @@ import ${package.model}.${package.modelName};
 
 /**
  * @desc
- * @author
+ * @author ${package.author}
  */
 
 public interface ${package.daoName} {
-    List<${package.modelName}> example();
+#if (${package.isInitQuery} == 'true')
+    List<${package.modelName}> ${package.initQuery}();
+#end
 }

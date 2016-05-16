@@ -34,9 +34,16 @@ public class StringUtil {
         }
         //check the first char,avoid first one upper
         if(isFirstUpper){
-            return String.valueOf(str.charAt(0)).toUpperCase() + str.substring(1);
+            return upperFirst(str);
         }
-        return String.valueOf(str.charAt(0)).toLowerCase() + str.substring(1);
+        return lowerFirst(str);
+    }
+    
+    public static String upperFirst(String str){
+    	return String.valueOf(str.charAt(0)).toUpperCase() + str.substring(1);
     }
 
+    public static String lowerFirst(String str){
+    	return String.valueOf(str.charAt(0)).toLowerCase() + str.substring(1);
+    }
 }

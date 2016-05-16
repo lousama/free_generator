@@ -1,6 +1,9 @@
 package com.lousama.generator.model;
 
 import java.util.List;
+import java.util.Set;
+
+import com.lousama.generator.util.ResourceUtil;
 
 /**
  * Created by lousama on 5/12/16.
@@ -14,10 +17,50 @@ public class Packages {
     private String daoName;
     private String modelName;
     private String mapperXmlName;
+    
+    private String isInitQuery = ResourceUtil.getString("is_init_query");
+    private String initQuery = ResourceUtil.getString("init_query_name");
+    private String author = ResourceUtil.getString("author");
+    private String isLombok = ResourceUtil.getString("is_lombok");
+    private String initSql;
 
     private List<Column> columnList;
+    private Set<String> importSet;
+    
 
-    public String getDao() {
+    public String getIsLombok() {
+		return isLombok;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public String getInitSql() {
+		return initSql;
+	}
+
+	public void setInitSql(String initSql) {
+		this.initSql = initSql;
+	}
+
+	public String getIsInitQuery() {
+		return isInitQuery;
+	}
+
+	public String getInitQuery() {
+		return initQuery;
+	}
+
+	public Set<String> getImportSet() {
+		return importSet;
+	}
+
+	public void setImportSet(Set<String> importSet) {
+		this.importSet = importSet;
+	}
+
+	public String getDao() {
         return dao;
     }
 

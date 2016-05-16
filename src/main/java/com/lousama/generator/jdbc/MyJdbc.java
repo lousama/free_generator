@@ -53,14 +53,10 @@ public class MyJdbc {
      * get db a reused connection
      * @return
      */
-    private static Connection getConnection(){
-        try {
-            if(conn == null){
-                Class.forName(driver);
-                conn = DriverManager.getConnection(url,user,password);
-            }
-        } catch (Exception e) {
-            logger.error("error:[get connection error]-",e);
+    private static Connection getConnection() throws Exception{
+        if(conn == null){
+            Class.forName(driver);
+            conn = DriverManager.getConnection(url,user,password);
         }
         return conn;
     }
@@ -129,8 +125,8 @@ public class MyJdbc {
         List<Column> colList = new ArrayList<Column>();
         for(int i = 1;i<=meta.getColumnCount();i++){
             Column column = new Column();
-            column.setColName(meta.getColumnName(i).toLowerCase());
-            column.setTypeName(meta.getColumnTypeName(i));
+            column.setDbColName(meta.getColumnName(i).toUpperCase());
+            column.setClassName(meta.getColumnTypeName(i));
             column.setColSize(meta.getColumnDisplaySize(i));
             column.setScale(meta.getScale(i));
             colList.add(column);

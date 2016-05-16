@@ -1,6 +1,8 @@
 package com.lousama.generator.exec;
 
 import com.lousama.generator.model.Packages;
+import com.lousama.generator.util.ResourceUtil;
+
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -18,9 +20,16 @@ import java.util.List;
 public class ProcessFile {
     private static VelocityEngine ve = null;
 
+    private static void init() throws Exception {
+        ve = new VelocityEngine();
+        ve.setProperty(RuntimeConstants.RESOURCE_LOADER,"classpath");
+        ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+        ve.init();
+    }
+    
     public static void process(List<Packages> pkgList) throws Exception {
         init();
-        String[] vmFiles = {"model.vm","dao.vm"};
+        String[] vmFiles = {"model.vm","dao.vm","mapper.vm"};
         for(Packages pkg : pkgList){
             for(String vmFile : vmFiles){
                 generator(vmFile,pkg);
@@ -37,12 +46,4 @@ public class ProcessFile {
         //TODO
         System.out.println(sw.toString());
     }
-
-    private static void init() throws Exception {
-        ve = new VelocityEngine();
-        ve.setProperty(RuntimeConstants.RESOURCE_LOADER,"classpath");
-        ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
-        ve.init();
-    }
-
 }
