@@ -1,5 +1,5 @@
 #free_generator
-a simple code-generator for spring MVC
+a simple free code-generator for spring MVC
 automatic create dao/model/mapper
 
 ##SUPPORT COLUMN TYPE
