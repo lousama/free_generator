@@ -44,11 +44,11 @@ dao_suffix=Dao              //the suffix of dao,default Dao,for e.g.,StudentDao,
 is_lombok=false             //if use lombok,default false
 
 #is hump name style
-is_hump_model_class=true    //if a hump name stylefor model class
-is_hump_column=true         //if a hump name style for column in model
+is_hump_model_class=true    //is a hump name stylefor model class
+is_hump_column=true         //is a hump name style for column in model
 
 #is there a init sql in dao and xml,do it for get all columns as a string show.
-is_init_query=true          //if a default query in xxxDao and xxMapper
+is_init_query=true          //is a default query in xxxDao and xxMapper
 init_query_name=select      //method name in xxxDao
 
 --------------------
