@@ -5,7 +5,7 @@
 
     <resultMap type="${package.modelName}" id="resultMap"> 
 #foreach ($column in ${package.columnList})
-	<result property="${column.colName}" column="${column.dbColName}"/>
+	    <result property="${column.colName}" column="${column.dbColName}"/>
 #end 
     </resultMap>
     

@@ -1,0 +1,45 @@
+<assembly>
+    <id>release</id>
+    <formats>
+        <format>zip</format>
+        <format>dir</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <dependencySets>
+        <dependencySet>
+            <!--
+               不使用项目的artifact，第三方jar不要解压，打包进zip文件的lib目录
+           -->
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>lib</outputDirectory>
+            <unpack>false</unpack>
+        </dependencySet>
+        <dependencySet>
+            <scope>system</scope>
+            <includes>
+                <include>*:jar</include>
+            </includes>
+            <outputDirectory>lib</outputDirectory>
+        </dependencySet>
+    </dependencySets>
+    <fileSets>
+    <!-- 把项目相关的说明文件，打包进zip文件的根目录 -->
+    <fileSet>
+        <directory>${project.basedir}</directory>
+        <outputDirectory>/</outputDirectory>
+        <includes>
+            <include>README*</include>
+        </includes>
+    </fileSet>
+
+    <!-- 把项目自己编译出来的jar文件，打包进zip文件的根目录 -->
+    <fileSet>
+        <directory>${project.build.directory}</directory>
+        <outputDirectory></outputDirectory>
+        <includes>
+            <include>*.jar</include>
+        </includes>
+    </fileSet>
+    </fileSets>
+
+</assembly>

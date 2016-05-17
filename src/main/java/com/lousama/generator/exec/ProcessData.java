@@ -51,11 +51,11 @@ public class ProcessData {
      */
     private static void processPackage(String tbName,Packages pkg){
         String classNamePrefix = StringUtil.parseHumpName(tbName,true,isHumpModelClass);
-        pkg.setDao(packagePrefix + packageDao);
+        pkg.setDao(packagePrefix + "." + packageDao);
         pkg.setDaoName(classNamePrefix+ daoSuffix);
-        pkg.setModel(packagePrefix + packageModel);
+        pkg.setModel(packagePrefix + "." + packageModel);
         pkg.setModelName(classNamePrefix + modelSuffix);
-        pkg.setMapperXml(packagePrefix + packageMapperXml);
+        pkg.setMapperXml(packagePrefix + "." + packageMapperXml);
         pkg.setMapperXmlName(classNamePrefix+ mapperXmlSuffix);
     }
 

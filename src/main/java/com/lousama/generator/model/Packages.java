@@ -17,6 +17,8 @@ public class Packages {
     private String daoName;
     private String modelName;
     private String mapperXmlName;
+
+    private String filaPath;
     
     private String isInitQuery = ResourceUtil.getString("is_init_query");
     private String initQuery = ResourceUtil.getString("init_query_name");
@@ -26,7 +28,15 @@ public class Packages {
 
     private List<Column> columnList;
     private Set<String> importSet;
-    
+
+
+    public String getFilaPath() {
+        return filaPath;
+    }
+
+    public void setFilaPath(String filaPath) {
+        this.filaPath = filaPath;
+    }
 
     public String getIsLombok() {
 		return isLombok;
