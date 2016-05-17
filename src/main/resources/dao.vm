@@ -2,6 +2,8 @@ package ${package.dao};
 
 import ${package.model}.${package.modelName};
 
+import java.util.List;
+
 /**
  * @desc
  * @author ${package.author}
