@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Built-By: lousama
+Class-Path: lib/ojdbc6-11.
+ 2.0.1.0.jar lib/velocity-1.5.jar lib/commons-collections-3.1.jar lib/
+ oro-2.0.8.jar lib/commons-lang-2.6.jar lib/commons-logging-1.2.jar li
+ b/mysql-connector-java-5.1.36.jar lib/log4j-1.2.16.jar lib/slf4j-api-
+ 1.6.2.jar lib/slf4j-log4j12-1.6.2.jar
+Created-By: Apache Maven 3.3.9
+Build-Jdk: 1.8.0_40
+Main-Class: com.lousama.generator.exec.Executor
+

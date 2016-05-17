@@ -140,6 +140,7 @@
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib</classpathPrefix>
                         </manifest>
+                        <manifestFile>MANIFEST.MF</manifestFile>
                         <manifestEntries>
                             <Class-Path>${basedir}/lib/ojdbc6-11.2.0.1.0.jar</Class-Path>
                         </manifestEntries>

@@ -3,7 +3,6 @@ package com.lousama.generator.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
@@ -21,7 +20,7 @@ public class ResourceUtil {
             String classPath = ResourceUtil.class.getResource("").getPath();
             String configPath = classPath.substring(0,classPath.indexOf("target") + 6);
             //solve file:/xxx
-            configPath = configPath.substring(configPath.indexOf(File.separator));
+            configPath = configPath.substring(configPath.indexOf("/"));
             inputStream = new FileInputStream(configPath + "/config.properties");
             prop = new Properties();
             prop.load(inputStream);
