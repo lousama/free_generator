@@ -3,14 +3,4 @@
 
 *.iml
 
-target/easy_generator-1.0-SNAPSHOT.jar
-
-target/classes/config.properties
-
-target/classes/dao.vm
-
-target/classes/model.vm
-
-target/classes/log4j.properties
-
-target/maven-archiver/pom.properties
+target/
