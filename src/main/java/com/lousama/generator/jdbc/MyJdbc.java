@@ -91,7 +91,7 @@ public class MyJdbc {
                 builder.append(tableRet.getString("TABLE_NAME") + ",");
             }
             tables = builder.toString();
-            getTableList();
+            tableList = getTableList();
         }
         conn.close();
         return tableList;

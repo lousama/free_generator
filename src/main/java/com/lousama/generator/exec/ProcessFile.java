@@ -76,7 +76,10 @@ public class ProcessFile {
     private static void createFile(String filePath,String text) throws Exception {
         File dir = new File(filePath.substring(0,filePath.lastIndexOf(File.separator)));
         File file = new File(filePath);
-        //create dictory if not exists
+        //try to delete dictory before create when file already exists
+        if(dir.exists()){
+            dir.delete();
+        }
         if(!dir.exists()){
             dir.mkdirs();
         }
@@ -92,7 +95,7 @@ public class ProcessFile {
 
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         FileChannel channel = fileOutputStream.getChannel();
-        ByteBuffer buffer = ByteBuffer.allocate(10240);
+        ByteBuffer buffer = ByteBuffer.allocate(20480);
         buffer.put(text.getBytes());
         buffer.flip();
         channel.write(buffer);

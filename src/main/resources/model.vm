@@ -33,7 +33,7 @@ public class ${package.modelName} {
         return ${column.colName};
     }
     
-    public ${column.className} ${column.setMethod} (${column.className} ${column.colName}) {
+    public void ${column.setMethod} (${column.className} ${column.colName}) {
         this.${column.colName} = ${column.colName};
     }
 #end
