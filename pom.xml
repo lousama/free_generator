@@ -6,7 +6,11 @@
 
     <groupId>com.lousama</groupId>
     <artifactId>free_generator</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
+
+    <properties>
+        <basedir>./</basedir>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -66,9 +70,11 @@
             <version>5.1.36</version>
         </dependency>
         <dependency>
-            <groupId>ojdbc</groupId>
-            <artifactId>ojdbc</artifactId>
-            <version>14</version>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>11.2.0.1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/ojdbc6-11.2.0.1.0.jar</systemPath>
         </dependency>
 
         <!-- log4j -->
@@ -88,6 +94,5 @@
             <version>1.6.2</version>
         </dependency>
     </dependencies>
-
 
 </project>
