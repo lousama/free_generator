@@ -123,9 +123,9 @@
                     <source>1.7</source>
                     <target>1.7</target>
                     <encoding>UTF-8</encoding>
-                    <compilerArguments>
-                        <extdirs>lib</extdirs>
-                    </compilerArguments>
+                    <!--<compilerArguments>-->
+                        <!--<extdirs>lib</extdirs>-->
+                    <!--</compilerArguments>-->
                 </configuration>
             </plugin>
             <plugin>
@@ -156,9 +156,9 @@
                 <version>2.4</version>
                 <configuration>
                     <descriptor>package.xml</descriptor>
-                    <compilerArguments>
-                        <extdirs>lib</extdirs>
-                    </compilerArguments>
+                    <!--<compilerArguments>-->
+                        <!--<extdirs>lib</extdirs>-->
+                    <!--</compilerArguments>-->
                 </configuration>
                 <executions>
                     <execution>

@@ -1,6 +1,7 @@
 package com.lousama.generator.exec;
 
 import com.lousama.generator.model.Packages;
+import com.lousama.generator.util.ResourceUtil;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -24,7 +25,7 @@ import java.util.List;
 public class ProcessFile {
     private static VelocityEngine ve = null;
     private static Logger logger = LoggerFactory.getLogger(ProcessFile.class);
-    private static final String jarName = "free_generator";
+    private static final String templates = ResourceUtil.getString("templates");
 
     private static void init() throws Exception {
         ve = new VelocityEngine();
@@ -35,7 +36,12 @@ public class ProcessFile {
     
     public static void process(List<Packages> pkgList) throws Exception {
         init();
-        String[] vmFiles = {"model.vm","dao.vm","mapper.vm"};
+        //String[] vmFiles = {"model.vm","dao.vm","mapper.vm"};
+        String[] temps = templates.split(",");
+        String[] vmFiles = new String[temps.length];
+        for (int i = 0; i < temps.length; i++) {
+            vmFiles[i] = temps[i] + ".vm";
+        }
         for(Packages pkg : pkgList){
             for(String vmFile : vmFiles){
                 generator(vmFile,pkg);
@@ -86,7 +92,7 @@ public class ProcessFile {
 
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         FileChannel channel = fileOutputStream.getChannel();
-        ByteBuffer buffer = ByteBuffer.allocate(2048);
+        ByteBuffer buffer = ByteBuffer.allocate(10240);
         buffer.put(text.getBytes());
         buffer.flip();
         channel.write(buffer);
