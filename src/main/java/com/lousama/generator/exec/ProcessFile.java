@@ -1,8 +1,6 @@
 package com.lousama.generator.exec;
 
 import com.lousama.generator.model.Packages;
-import com.lousama.generator.util.ResourceUtil;
-
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;

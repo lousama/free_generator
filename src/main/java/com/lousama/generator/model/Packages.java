@@ -1,9 +1,9 @@
 package com.lousama.generator.model;
 
+import com.lousama.generator.util.ResourceUtil;
+
 import java.util.List;
 import java.util.Set;
-
-import com.lousama.generator.util.ResourceUtil;
 
 /**
  * Created by lousama on 5/12/16.
