@@ -62,11 +62,11 @@ public class ProcessFile {
 
     private static String getFilePath(String vmFile,Packages pkg){
         String classPath = "";
-        if("model.vm".equals(vmFile)){
+        if(vmFile.startsWith("model")){
             classPath = (pkg.getModel() + "." + pkg.getModelName()).replace('.',File.separatorChar) + ".java";
-        }else if("dao.vm".equals(vmFile)){
+        }else if(vmFile.startsWith("dao")){
             classPath = (pkg.getDao() + "." + pkg.getDaoName()).replace('.',File.separatorChar) + ".java";
-        }else if("mapper.vm".equals(vmFile)){
+        }else if(vmFile.startsWith("mapper")){
             classPath = (pkg.getMapperXml() + "." + pkg.getMapperXmlName()).replace('.',File.separatorChar) + ".xml";
         }
         return classPath;

@@ -1,8 +1,10 @@
 # free_generator
 
-a free code-generator for spring MVC.
+a free code-generator for spring MVC and MyBatis.
 automatic create dao/model/mapper.
 you can custom everything you need
+
+[[中文说明](https://github.com/lousama/free_generator/blob/master/README.zh.md)]
 
 ## HOW TO BEGIN
 ``` bash
