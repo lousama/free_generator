@@ -26,7 +26,7 @@ java -jar free_generator.jar
 ```
 文件生成在free_generator-release目录下
 
-## CONFIG.PROPERTIES
+## 配置
 
 **`config.properties`** 是主要的配置文件:
 
