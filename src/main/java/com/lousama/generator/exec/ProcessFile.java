@@ -26,6 +26,7 @@ public class ProcessFile {
     private static VelocityEngine ve = null;
     private static Logger logger = LoggerFactory.getLogger(ProcessFile.class);
     private static final String templates = ResourceUtil.getString("templates");
+    private static final int bufferCapacity = ResourceUtil.getInt("buffer_capacity");
 
     private static void init() throws Exception {
         ve = new VelocityEngine();
@@ -95,7 +96,7 @@ public class ProcessFile {
 
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         FileChannel channel = fileOutputStream.getChannel();
-        ByteBuffer buffer = ByteBuffer.allocate(20480);
+        ByteBuffer buffer = ByteBuffer.allocate(bufferCapacity);
         buffer.put(text.getBytes());
         buffer.flip();
         channel.write(buffer);

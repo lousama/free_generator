@@ -56,6 +56,9 @@ is_hump_column=true         //is a hump name style for column in model
 is_init_query=true          //is a default query in xxxDao and xxMapper
 init_query_name=select      //method name in xxxDao
 
+#default capacity of ByteBuffer.allocate,change bigger if throw a nio Exception
+buffer_capacity=20480
+
 --------------------
 
 ##### write

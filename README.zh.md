@@ -53,6 +53,9 @@ is_hump_column=true         //model下属性名是否是驼峰格式
 is_init_query=true          //mapper中是否有一条默认查询
 init_query_name=select      //mapper中默认查询的名字
 
+# ByteBuffer.allocate默认分配内存,报nio Exception的话可以尝试增大这个值
+buffer_capacity=20480
+
 --------------------
 
 ##### write
