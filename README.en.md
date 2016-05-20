@@ -86,6 +86,49 @@ jdbc_password=root
 jdbc_table=     //table schema you want to generator,get all tables if be null
 
 ```
+## CUSTOM-MADE MODEL
+this project use velocity to create file,you can use custom model if you need.
+
+the params to velocity is `List<Packages>`,`Packages` for next:
+
+``` java
+    private String dao;  //package path of dao ,eg:com.lousama.generator.dao
+    private String model;   //same as above
+    private String mapperXml;   //same as above
+
+    private String daoName; //name of dao,eg:StudentDao
+    private String modelName;   //same as above
+    private String mapperXmlName;   //same as above
+
+    private String tableName;   //name of table in database,all words upper
+
+    private String isInitQuery = ResourceUtil.getString("is_init_query");
+    private String initQuery = ResourceUtil.getString("init_query_name");
+    private String author = ResourceUtil.getString("author");
+    private String isLombok = ResourceUtil.getString("is_lombok");
+
+    private String initSql; //init sql in mapper.xml,eg:select id,name from table
+
+    private String pkCondition; //priamry key condition in sql in mapper.xml,eg:id1=#{id1} and id2=#{id2}
+
+    private List<Column> columnList;    // all columns in tableName above
+
+    private Set<String> importSet;  //import package set in model class
+```
+now next `Column` here:
+``` java
+    private String className;   //the class type of column eg:String,int,BigDecimal
+    private String importClass; //some class type must import before class,eg:java.math.BigDecimal
+    private String dbColName;   //the real column name in database,if ${is_hump_column}=false,it will same as colName next;
+    private String colName; //column name in model class file
+    private String getMethod;   //getMethod in model class file
+    private String setMethod;   //setMethod in model class file
+    private int colSize;    //size of column in databese
+    private int scale;  //scale of column indatabase,if>0,numberic will parse BigDecimal
+    private int isPk;   //if this column is primary key
+```
+if you understand grammar,you can got your custom xxx.vm file whatever you want
+
 
 ## SUPPORT COLUMN TYPE
 
@@ -102,7 +145,7 @@ the next database column type can be parse correctly
 
 ## UPDATE LOG
 
-    2015-05-20
+### 2015-05-20
     v1.1:
     - add analysis for primary key in mapper.xml---resultMap node
     - Packages add a attribute:

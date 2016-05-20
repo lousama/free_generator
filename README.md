@@ -94,6 +94,51 @@ jdbc_table=     //要生成文件的表名,为空的话会取实例下所有的�
 
 ```
 
+## 自制模版
+这个项目是基于 `velocity` 模版来生成文件,你可以使用自己定义的模版来生成文件
+
+传给 `velocity`模版的参数是`List<Packages>`,一个表对应一个`Packages` 类信息,字段如下:
+
+``` java
+    private String dao;  //dao的包路径 ,例如:com.lousama.generator.dao
+    private String model;   //同上
+    private String mapperXml;   //同上
+
+    private String daoName; //dao的类名字,eg:StudentDao
+    private String modelName;   //同上
+    private String mapperXmlName;   //同上
+
+    private String tableName;   //数据库里的表名,已经格式化成大写
+
+    private String isInitQuery = ResourceUtil.getString("is_init_query");
+    private String initQuery = ResourceUtil.getString("init_query_name");
+    private String author = ResourceUtil.getString("author");
+    private String isLombok = ResourceUtil.getString("is_lombok");
+
+    private String initSql; //mapper.xml里的默认查询sql,例如:select id,name from table
+
+    private String pkCondition; //mapper.xml中可能用到的按照主键查询的条件,格式如:id1=#{id1} and id2=#{id2}
+
+    private List<Column> columnList;    // 表名对应的表里的所有列信息
+
+    private Set<String> importSet;  //model类里需要import的class集合
+```
+
+`Column` 里是列字段的详细信息:
+
+``` java
+    private String className;   //列所属的类,例如:String,int,BigDecimal
+    private String importClass; //列要导入的类的全路径,如:java.math.BigDecimal
+    private String dbColName;   //表中真实的字段名称,如果配置文件中is_hump_column}=false,那么跟下面的colName值一样
+    private String colName; //格式化后的列名
+    private String getMethod;   //model文件中列对应的get方法
+    private String setMethod;   //model文件中列对应的set方法
+    private int colSize;    //表中列的长度
+    private int scale;  //表中列的小数位长度,如果>0的话,number类型会被解析成BigDecimal
+    private int isPk;   //该列是否是主键
+```
+有了以上参数的支持,如果你懂得velocity语法的话,可能很自由的定制自己的模版来生成文件
+
 ## 支持的字段类型
 
 暂时支持下面这些表字段类型:
@@ -111,7 +156,7 @@ jdbc_table=     //要生成文件的表名,为空的话会取实例下所有的�
 
 ## 更新日志
 
-    2015-05-20
+### 2015-05-20
     v1.1:
     - 添加了mapper.xml文件resultMap的主键解析
     - Packages类中添加属性:
