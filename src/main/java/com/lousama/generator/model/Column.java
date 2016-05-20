@@ -14,9 +14,16 @@ public class Column {
     private String setMethod;
     private int colSize;
     private int scale;
-    
-    
-    
+    private int isPk;
+
+    public int getIsPk() {
+        return isPk;
+    }
+
+    public void setIsPk(int isPk) {
+        this.isPk = isPk;
+    }
+
     public String getDbColName() {
 		return dbColName;
 	}

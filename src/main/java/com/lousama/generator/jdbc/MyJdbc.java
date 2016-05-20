@@ -72,20 +72,23 @@ public class MyJdbc {
         Statement st;
         ResultSet rs;
         conn = getConnection();
+        DatabaseMetaData metaData = conn.getMetaData();
         List<Table> tableList =  getSqlList();
         if(tableList != null && tableList.size() != 0){
             for (Table table : tableList) {
+                List<String> pkList = getPrimarkKeyList(table.getName().toUpperCase(),metaData);
                 st = conn.createStatement();
                 rs = st.executeQuery(table.getSql());
                 ResultSetMetaData meta = rs.getMetaData();
-                table.setColumnList(getColList(meta));
+                //all column list
+                //List<Column> allColumnList = getColList(meta);
+                table.setColumnList(getColList(meta,pkList));
                 rs.close();
                 st.close();
             }
         }else {
             logger.info("config info:[tables] is null,get all tables in database");
-            DatabaseMetaData metaData = conn.getMetaData();
-            ResultSet tableRet = metaData.getTables(null,schema,"%",new String[]{"TABLE"});
+            ResultSet tableRet = metaData.getTables("",schema,"%",new String[]{"TABLE"});
             StringBuilder builder = new StringBuilder();
             while (tableRet.next()){
                 builder.append(tableRet.getString("TABLE_NAME") + ",");
@@ -121,17 +124,39 @@ public class MyJdbc {
      * @return colList
      * @throws Exception
      */
-    private static List<Column> getColList(ResultSetMetaData meta) throws Exception{
+    private static List<Column> getColList(ResultSetMetaData meta,List<String> pkList) throws Exception{
         List<Column> colList = new ArrayList<Column>();
         for(int i = 1;i<=meta.getColumnCount();i++){
             Column column = new Column();
-            column.setDbColName(meta.getColumnName(i).toUpperCase());
+            String columnName = meta.getColumnName(i).toUpperCase();
+            column.setDbColName(columnName);
             column.setClassName(meta.getColumnTypeName(i));
             column.setColSize(meta.getColumnDisplaySize(i));
             column.setScale(meta.getScale(i));
+            if(pkList.contains(columnName)){
+                column.setIsPk(1);
+            }else{
+                column.setIsPk(0);
+            }
             colList.add(column);
         }
         return colList;
+    }
+
+    /**
+     * get primaryKey list in table
+     * @param tableName
+     * @param metaData
+     * @return
+     * @throws Exception
+     */
+    private static List<String> getPrimarkKeyList(String tableName,DatabaseMetaData metaData) throws Exception{
+        ResultSet rs = metaData.getPrimaryKeys("",schema,tableName);
+        List<String> list = new ArrayList<>();
+        while (rs.next()){
+            list.add(rs.getString("Column_name"));
+        }
+        return list;
     }
 
 }

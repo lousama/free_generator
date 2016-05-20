@@ -28,13 +28,22 @@ public class ProcessFile {
     private static final String templates = ResourceUtil.getString("templates");
     private static final int bufferCapacity = ResourceUtil.getInt("buffer_capacity");
 
+    /**
+     * init velocity
+     * @throws Exception
+     */
     private static void init() throws Exception {
         ve = new VelocityEngine();
         ve.setProperty(RuntimeConstants.RESOURCE_LOADER,"classpath");
         ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
         ve.init();
     }
-    
+
+    /**
+     * process main logic for create file
+     * @param pkgList dataset to velocity
+     * @throws Exception
+     */
     public static void process(List<Packages> pkgList) throws Exception {
         init();
         //String[] vmFiles = {"model.vm","dao.vm","mapper.vm"};
@@ -50,6 +59,12 @@ public class ProcessFile {
         }
     }
 
+    /**
+     * generator file
+     * @param vmFile
+     * @param pkg
+     * @throws Exception
+     */
     private static void generator(String vmFile,Packages pkg) throws Exception {
         Template template = ve.getTemplate(vmFile);
         VelocityContext vctx = new VelocityContext();
@@ -61,6 +76,12 @@ public class ProcessFile {
         createFile(filePath,sw.toString());
     }
 
+    /**
+     * get file path from data and config
+     * @param vmFile name list for velocity model
+     * @param pkg Packages
+     * @return
+     */
     private static String getFilePath(String vmFile,Packages pkg){
         String classPath = "";
         if(vmFile.startsWith("model")){
@@ -74,6 +95,13 @@ public class ProcessFile {
 
     }
 
+    /**
+     * create file here</p>
+     * try to delete dictory or file if exists
+     * @param filePath file path
+     * @param text text for file
+     * @throws Exception
+     */
     private static void createFile(String filePath,String text) throws Exception {
         File dir = new File(filePath.substring(0,filePath.lastIndexOf(File.separator)));
         File file = new File(filePath);

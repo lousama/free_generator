@@ -5,13 +5,13 @@
 
     <resultMap type="${package.modelName}" id="resultMap"> 
 #foreach ($column in ${package.columnList})
-	    <result property="${column.colName}" column="${column.dbColName}"/>
+	    #if(${column.isPk} == 1)<id #else<result#end property="${column.colName}" column="${column.dbColName}"/>
 #end 
     </resultMap>
     
 #if (${package.isInitQuery} == 'true')
-    <select id="${package.initQuery}" resultMap="resultMap">
-        ${package.initSql}
+    <select id="${package.initQuery}" resultMap="resultMap" parameterType="${package.model}.${package.modelName}">
+        ${package.initSql} WHERE ${package.pkCondition}
     </select> 
 #end
 

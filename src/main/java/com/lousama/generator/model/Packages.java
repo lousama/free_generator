@@ -18,17 +18,41 @@ public class Packages {
     private String modelName;
     private String mapperXmlName;
 
-    private String filaPath;
     private String tableName;
-    
+
     private String isInitQuery = ResourceUtil.getString("is_init_query");
     private String initQuery = ResourceUtil.getString("init_query_name");
     private String author = ResourceUtil.getString("author");
     private String isLombok = ResourceUtil.getString("is_lombok");
+
+    /**
+     * init sql in mapper.xml</p>
+     * e.g.:select id,name from table
+      */
     private String initSql;
 
+    /**
+     * priamry key condition in sql in mapper.xml</p>
+     * if table has more primary keys, this reduce your repeat coding</p>
+     * e.g.:id1=#{id1} and id2=#{id2}</p>
+     * keyword:WHERE need in mapper.vm file
+     */
+    private String pkCondition;
+
     private List<Column> columnList;
+
+    /**
+     * import package set in model class
+     */
     private Set<String> importSet;
+
+    public String getPkCondition() {
+        return pkCondition;
+    }
+
+    public void setPkCondition(String pkCondition) {
+        this.pkCondition = pkCondition;
+    }
 
     public String getTableName() {
         return tableName;
@@ -36,14 +60,6 @@ public class Packages {
 
     public void setTableName(String tableName) {
         this.tableName = tableName;
-    }
-
-    public String getFilaPath() {
-        return filaPath;
-    }
-
-    public void setFilaPath(String filaPath) {
-        this.filaPath = filaPath;
     }
 
     public String getIsLombok() {
@@ -145,13 +161,13 @@ public class Packages {
                 ", daoName='" + daoName + '\'' +
                 ", modelName='" + modelName + '\'' +
                 ", mapperXmlName='" + mapperXmlName + '\'' +
-                ", filaPath='" + filaPath + '\'' +
                 ", tableName='" + tableName + '\'' +
                 ", isInitQuery='" + isInitQuery + '\'' +
                 ", initQuery='" + initQuery + '\'' +
                 ", author='" + author + '\'' +
                 ", isLombok='" + isLombok + '\'' +
                 ", initSql='" + initSql + '\'' +
+                ", pkCondition='" + pkCondition + '\'' +
                 ", columnList=" + columnList +
                 ", importSet=" + importSet +
                 '}';

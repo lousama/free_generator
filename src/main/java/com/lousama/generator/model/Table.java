@@ -1,7 +1,5 @@
 package com.lousama.generator.model;
 
-import com.lousama.generator.util.ResourceUtil;
-
 import java.util.List;
 
 /**
@@ -12,7 +10,24 @@ public class Table {
     private String name;
     private String sql;
     private List<Column> columnList;
+    private List<Column> pkColumnList;
+    private List<Column> unPKColumnList;
 
+    public List<Column> getPkColumnList() {
+        return pkColumnList;
+    }
+
+    public void setPkColumnList(List<Column> pkColumnList) {
+        this.pkColumnList = pkColumnList;
+    }
+
+    public List<Column> getUnPKColumnList() {
+        return unPKColumnList;
+    }
+
+    public void setUnPKColumnList(List<Column> unPKColumnList) {
+        this.unPKColumnList = unPKColumnList;
+    }
 
     public String getSql() {
         return sql;
@@ -41,9 +56,11 @@ public class Table {
     @Override
     public String toString() {
         return "Table{" +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", sql='" + sql + '\'' +
                 ", columnList=" + columnList +
+                ", pkColumnList=" + pkColumnList +
+                ", unPKColumnList=" + unPKColumnList +
                 '}';
     }
 }

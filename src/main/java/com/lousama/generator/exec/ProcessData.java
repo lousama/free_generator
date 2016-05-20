@@ -6,6 +6,7 @@ import com.lousama.generator.model.Table;
 import com.lousama.generator.util.ColumnUtil;
 import com.lousama.generator.util.ResourceUtil;
 import com.lousama.generator.util.StringUtil;
+import org.apache.commons.lang.text.StrBuilder;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -39,7 +40,7 @@ public class ProcessData {
             //process package and fileName
             processPackage(table.getName(),pkg);
             //process column,parse column name to hump
-            processColumn(table.getColumnList(),pkg,table.getName());
+            processColumnData(table.getColumnList(),pkg,table.getName());
             pkgList.add(pkg);
         }
         return pkgList;
@@ -66,9 +67,11 @@ public class ProcessData {
      * @param pkg
      * @param tbName
      */
-    private static void processColumn(List<Column> colList,Packages pkg,String tbName){
+    private static void processColumnData(List<Column> colList, Packages pkg, String tbName){
     	Set<String> set = new HashSet<String>();
-    	StringBuilder builder = new StringBuilder("SELECT ");
+    	StringBuilder initBuilder = new StringBuilder("SELECT ");
+        StrBuilder pkConditionBuilder = new StrBuilder();
+
         for(Column col : colList){
             col.setColName(StringUtil.parseHumpName(col.getDbColName(),false,isHumpColumn));
             col.setImportClass(ColumnUtil.parseColumnType(col.getClassName(),col.getColSize(),col.getScale()));
@@ -80,9 +83,16 @@ public class ProcessData {
         	}
         	col.setSetMethod("set" + StringUtil.upperFirst(col.getColName()));
         	col.setGetMethod("get" + StringUtil.upperFirst(col.getColName()));
-        	builder.append(col.getDbColName()).append(",");
+        	initBuilder.append(col.getDbColName()).append(",");
+            if(col.getIsPk() == 1){
+                if(pkConditionBuilder.size() > 0){
+                    pkConditionBuilder.append(" AND ");
+                }
+                pkConditionBuilder.append(col.getDbColName()).append("=#{").append(col.getColName()).append("} ");
+            }
         }
-        pkg.setInitSql(builder.deleteCharAt(builder.length()-1).toString() + " FROM " + tbName);
+        pkg.setInitSql(initBuilder.deleteCharAt(initBuilder.length()-1).toString() + " FROM " + tbName);
+        pkg.setPkCondition(pkConditionBuilder.toString());
         pkg.setImportSet(set);
         pkg.setColumnList(colList);
     }
