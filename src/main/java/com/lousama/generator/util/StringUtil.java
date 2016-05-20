@@ -46,4 +46,11 @@ public class StringUtil {
     public static String lowerFirst(String str){
     	return String.valueOf(str.charAt(0)).toLowerCase() + str.substring(1);
     }
+
+    public static boolean isEmpty(String str){
+        return str == null || "".equals(str);
+    }
+    public static boolean isNotEmpty(String str){
+        return !isEmpty(str);
+    }
 }

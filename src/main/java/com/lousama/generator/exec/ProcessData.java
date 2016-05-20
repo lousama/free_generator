@@ -35,6 +35,7 @@ public class ProcessData {
         List<Packages> pkgList = new ArrayList<Packages>(tableList.size());
         for (Table table : tableList) {
             Packages pkg = new Packages();
+            pkg.setTableName(table.getName().toUpperCase());
             //process package and fileName
             processPackage(table.getName(),pkg);
             //process column,parse column name to hump
@@ -51,11 +52,11 @@ public class ProcessData {
      */
     private static void processPackage(String tbName,Packages pkg){
         String classNamePrefix = StringUtil.parseHumpName(tbName,true,isHumpModelClass);
-        pkg.setDao(packagePrefix + "." + packageDao);
+        pkg.setDao(packagePrefix + (StringUtil.isEmpty(packagePrefix)||StringUtil.isEmpty(packageDao)?"":".") + packageDao);
         pkg.setDaoName(classNamePrefix+ daoSuffix);
-        pkg.setModel(packagePrefix + "." + packageModel);
+        pkg.setModel(packagePrefix + (StringUtil.isEmpty(packagePrefix)||StringUtil.isEmpty(packageModel)?"":".") + packageModel);
         pkg.setModelName(classNamePrefix + modelSuffix);
-        pkg.setMapperXml(packagePrefix + "." + packageMapperXml);
+        pkg.setMapperXml(packagePrefix + (StringUtil.isEmpty(packagePrefix)||StringUtil.isEmpty(packageMapperXml)?"":".") + packageMapperXml);
         pkg.setMapperXmlName(classNamePrefix+ mapperXmlSuffix);
     }
 

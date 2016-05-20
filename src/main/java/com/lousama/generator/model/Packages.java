@@ -19,6 +19,7 @@ public class Packages {
     private String mapperXmlName;
 
     private String filaPath;
+    private String tableName;
     
     private String isInitQuery = ResourceUtil.getString("is_init_query");
     private String initQuery = ResourceUtil.getString("init_query_name");
@@ -29,6 +30,13 @@ public class Packages {
     private List<Column> columnList;
     private Set<String> importSet;
 
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
 
     public String getFilaPath() {
         return filaPath;
@@ -137,7 +145,15 @@ public class Packages {
                 ", daoName='" + daoName + '\'' +
                 ", modelName='" + modelName + '\'' +
                 ", mapperXmlName='" + mapperXmlName + '\'' +
+                ", filaPath='" + filaPath + '\'' +
+                ", tableName='" + tableName + '\'' +
+                ", isInitQuery='" + isInitQuery + '\'' +
+                ", initQuery='" + initQuery + '\'' +
+                ", author='" + author + '\'' +
+                ", isLombok='" + isLombok + '\'' +
+                ", initSql='" + initSql + '\'' +
                 ", columnList=" + columnList +
+                ", importSet=" + importSet +
                 '}';
     }
 }
