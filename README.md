@@ -156,6 +156,14 @@ jdbc_table=     //要生成文件的表名,为空的话会取实例下所有的�
 
 ## 更新日志
 
+### 2015-05-24
+    v1.2:
+    - 修正了velocity模版中有中文时写入文件乱码的bug
+    - Packages类中添加属性:
+        - insertStatements 在xml中用于新增语句,例如:insert into table(initQuery) values(insertStatements),为了保证字段顺序,initQuery已改成不包含sql关键字的字段排列
+        - updateStatements 在xml中用于更新的语句块,例如:update table set updateStatements where xxxx,适用于全字段更新(包括主键)
+        - modelNameLowerFirst model类的首字母小写,便于在dao接口层作为参数使用,例如(Student student)
+
 ### 2015-05-20
     v1.1:
     - 添加了mapper.xml文件resultMap的主键解析

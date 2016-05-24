@@ -6,7 +6,6 @@ import com.lousama.generator.model.Table;
 import com.lousama.generator.util.ColumnUtil;
 import com.lousama.generator.util.ResourceUtil;
 import com.lousama.generator.util.StringUtil;
-import org.apache.commons.lang.text.StrBuilder;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -59,6 +58,7 @@ public class ProcessData {
         pkg.setModelName(classNamePrefix + modelSuffix);
         pkg.setMapperXml(packagePrefix + (StringUtil.isEmpty(packagePrefix)||StringUtil.isEmpty(packageMapperXml)?"":".") + packageMapperXml);
         pkg.setMapperXmlName(classNamePrefix+ mapperXmlSuffix);
+        pkg.setModelNameLowerFirst(StringUtil.lowerFirst(pkg.getModelName()));
     }
 
     /**
@@ -69,8 +69,10 @@ public class ProcessData {
      */
     private static void processColumnData(List<Column> colList, Packages pkg, String tbName){
     	Set<String> set = new HashSet<String>();
-    	StringBuilder initBuilder = new StringBuilder("SELECT ");
-        StrBuilder pkConditionBuilder = new StrBuilder();
+    	StringBuilder initBuilder = new StringBuilder();
+        StringBuilder pkConditionBuilder = new StringBuilder();
+        StringBuilder insertBuilder = new StringBuilder();
+        StringBuilder updateBuilder = new StringBuilder();
 
         for(Column col : colList){
             col.setColName(StringUtil.parseHumpName(col.getDbColName(),false,isHumpColumn));
@@ -84,15 +86,23 @@ public class ProcessData {
         	col.setSetMethod("set" + StringUtil.upperFirst(col.getColName()));
         	col.setGetMethod("get" + StringUtil.upperFirst(col.getColName()));
         	initBuilder.append(col.getDbColName()).append(",");
+            //pkCondition
             if(col.getIsPk() == 1){
-                if(pkConditionBuilder.size() > 0){
+                if(pkConditionBuilder.length() > 0){
                     pkConditionBuilder.append(" AND ");
                 }
                 pkConditionBuilder.append(col.getDbColName()).append("=#{").append(col.getColName()).append("} ");
             }
+            //insertStatements
+            insertBuilder.append("#{").append(col.getColName()).append("},");
+            //updateStatements
+            updateBuilder.append(col.getDbColName()).append("=#{").append(col.getColName()).append("},");
+
         }
-        pkg.setInitSql(initBuilder.deleteCharAt(initBuilder.length()-1).toString() + " FROM " + tbName);
+        pkg.setInitSql(initBuilder.deleteCharAt(initBuilder.length()-1).toString());
         pkg.setPkCondition(pkConditionBuilder.toString());
+        pkg.setInsertStatements(insertBuilder.deleteCharAt(insertBuilder.length()-1).toString());
+        pkg.setUpdateStatements(updateBuilder.deleteCharAt(updateBuilder.length()-1).toString());
         pkg.setImportSet(set);
         pkg.setColumnList(colList);
     }

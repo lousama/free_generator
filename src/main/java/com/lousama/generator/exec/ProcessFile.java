@@ -4,6 +4,7 @@ import com.lousama.generator.model.Packages;
 import com.lousama.generator.util.ResourceUtil;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
@@ -14,7 +15,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.StringWriter;
 import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.charset.Charset;
 import java.util.List;
 
 /**
@@ -36,6 +39,9 @@ public class ProcessFile {
         ve = new VelocityEngine();
         ve.setProperty(RuntimeConstants.RESOURCE_LOADER,"classpath");
         ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+        ve.setProperty(Velocity.ENCODING_DEFAULT, "UTF-8");
+        ve.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
+        ve.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
         ve.init();
     }
 
@@ -124,10 +130,15 @@ public class ProcessFile {
 
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         FileChannel channel = fileOutputStream.getChannel();
-        ByteBuffer buffer = ByteBuffer.allocate(bufferCapacity);
-        buffer.put(text.getBytes());
-        buffer.flip();
-        channel.write(buffer);
+        CharBuffer charBuffer = CharBuffer.allocate(text.length());
+        charBuffer.put(text);
+        charBuffer.flip();
+        Charset charset=Charset.defaultCharset();
+        ByteBuffer byteBuffer =charset.encode(charBuffer);
+        while (byteBuffer.hasRemaining()) {
+            channel.write(byteBuffer);
+        }
+
         channel.close();
         fileOutputStream.close();
         logger.info("success generator file:-- " + filePath);

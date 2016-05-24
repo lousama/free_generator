@@ -11,7 +11,7 @@
     
 #if (${package.isInitQuery} == 'true')
     <select id="${package.initQuery}" resultMap="resultMap" parameterType="${package.model}.${package.modelName}">
-        ${package.initSql} WHERE ${package.pkCondition}
+        SELECT ${package.initSql} FROM ${package.tableName} WHERE ${package.pkCondition}
     </select> 
 #end
 

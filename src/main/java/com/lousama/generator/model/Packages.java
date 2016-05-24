@@ -39,12 +39,44 @@ public class Packages {
      */
     private String pkCondition;
 
+    /**
+     * insert into table values(insertStatements)
+     */
+    private String insertStatements;
+
+    /**
+     * update table set updateStatements where xxxx
+     */
+    private String updateStatements;
+
+
     private List<Column> columnList;
 
     /**
      * import package set in model class
      */
     private Set<String> importSet;
+
+    /**
+     * just for params in interface,just like :insert(Student student)
+     */
+    private String modelNameLowerFirst;
+
+    public String getInsertStatements() {
+        return insertStatements;
+    }
+
+    public void setInsertStatements(String insertStatements) {
+        this.insertStatements = insertStatements;
+    }
+
+    public String getUpdateStatements() {
+        return updateStatements;
+    }
+
+    public void setUpdateStatements(String updateStatements) {
+        this.updateStatements = updateStatements;
+    }
 
     public String getPkCondition() {
         return pkCondition;
@@ -152,6 +184,14 @@ public class Packages {
         this.columnList = columnList;
     }
 
+    public String getModelNameLowerFirst() {
+        return modelNameLowerFirst;
+    }
+
+    public void setModelNameLowerFirst(String modelNameLowerFirst) {
+        this.modelNameLowerFirst = modelNameLowerFirst;
+    }
+
     @Override
     public String toString() {
         return "Packages{" +
@@ -168,8 +208,11 @@ public class Packages {
                 ", isLombok='" + isLombok + '\'' +
                 ", initSql='" + initSql + '\'' +
                 ", pkCondition='" + pkCondition + '\'' +
+                ", insertStatements='" + insertStatements + '\'' +
+                ", updateStatements='" + updateStatements + '\'' +
                 ", columnList=" + columnList +
                 ", importSet=" + importSet +
+                ", modelNameLowerFirst='" + modelNameLowerFirst + '\'' +
                 '}';
     }
 }

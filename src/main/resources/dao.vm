@@ -11,6 +11,6 @@ import java.util.List;
 
 public interface ${package.daoName} {
 #if (${package.isInitQuery} == 'true')
-    List<${package.modelName}> ${package.initQuery}();
+    ${package.modelName} ${package.initQuery}();
 #end
 }
