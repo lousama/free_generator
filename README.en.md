@@ -141,11 +141,15 @@ the next database column type can be parse correctly
 
 ##TIPS
 
- Better not connect database on product enviroment!
+ **Better not connect database on product enviroment!**
 
 ## UPDATE LOG
 
 ### 2015-05-20
+
+    v1.3:
+    - my english is so poor that wanna not update this document now...
+    
     v1.1:
     - add analysis for primary key in mapper.xml---resultMap node
     - Packages add a attribute:

@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -14,6 +16,7 @@ public class ResourceUtil {
     private static Logger logger = LoggerFactory.getLogger(ResourceUtil.class);
     private static Properties prop;
     private static InputStream inputStream;
+    private static final String separator = ",";
 
     static {
         try {
@@ -39,6 +42,11 @@ public class ResourceUtil {
 
     public static boolean getBoolean(final String propertyName) {
         return Boolean.valueOf(getString(propertyName));
+    }
+
+    public static List<String> getList(final String propertyName) {
+        String[] strs = getString(propertyName).split(separator);
+        return Arrays.asList(strs);
     }
 
 }

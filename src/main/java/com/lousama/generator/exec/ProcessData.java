@@ -29,13 +29,15 @@ public class ProcessData {
     private static String modelSuffix = ResourceUtil.getString("model_suffix");
     private static String mapperXmlSuffix = ResourceUtil.getString("mapper_xml_suffix");
     private static String daoSuffix = ResourceUtil.getString("dao_suffix");
+    private static String daoPrefix = ResourceUtil.getString("dao_prefix");
 
+    private static List<String> notInSqlColumnList = ResourceUtil.getList("not_in_sql_column");
 
     public static List<Packages> process(List<Table> tableList){
         List<Packages> pkgList = new ArrayList<Packages>(tableList.size());
         for (Table table : tableList) {
             Packages pkg = new Packages();
-            pkg.setTableName(table.getName().toUpperCase());
+            pkg.setTableName(table.getName().toLowerCase());
             //process package and fileName
             processPackage(table.getName(),pkg);
             //process column,parse column name to hump
@@ -53,7 +55,7 @@ public class ProcessData {
     private static void processPackage(String tbName,Packages pkg){
         String classNamePrefix = StringUtil.parseHumpName(tbName,true,isHumpModelClass);
         pkg.setDao(packagePrefix + (StringUtil.isEmpty(packagePrefix)||StringUtil.isEmpty(packageDao)?"":".") + packageDao);
-        pkg.setDaoName(classNamePrefix+ daoSuffix);
+        pkg.setDaoName(daoPrefix + classNamePrefix+ daoSuffix);
         pkg.setModel(packagePrefix + (StringUtil.isEmpty(packagePrefix)||StringUtil.isEmpty(packageModel)?"":".") + packageModel);
         pkg.setModelName(classNamePrefix + modelSuffix);
         pkg.setMapperXml(packagePrefix + (StringUtil.isEmpty(packagePrefix)||StringUtil.isEmpty(packageMapperXml)?"":".") + packageMapperXml);
@@ -78,14 +80,13 @@ public class ProcessData {
             col.setColName(StringUtil.parseHumpName(col.getDbColName(),false,isHumpColumn));
             col.setImportClass(ColumnUtil.parseColumnType(col.getClassName(),col.getColSize(),col.getScale()));
             String importClass = col.getImportClass();
-        	col.setClassName(importClass.indexOf(".") == -1 ? importClass : importClass.substring(importClass.lastIndexOf(".")+1));
-        	col.setImportClass(importClass.indexOf(".") == -1 ? "" : importClass);
+        	col.setClassName(!importClass.contains(".") ? importClass : importClass.substring(importClass.lastIndexOf(".")+1));
+        	col.setImportClass(!importClass.contains(".") ? "" : importClass);
         	if(col.getImportClass() != null && !"".equals(col.getImportClass())){
         		set.add(col.getImportClass());	
         	}
         	col.setSetMethod("set" + StringUtil.upperFirst(col.getColName()));
         	col.setGetMethod("get" + StringUtil.upperFirst(col.getColName()));
-        	initBuilder.append(col.getDbColName()).append(",");
             //pkCondition
             if(col.getIsPk() == 1){
                 if(pkConditionBuilder.length() > 0){
@@ -94,9 +95,13 @@ public class ProcessData {
                 pkConditionBuilder.append(col.getDbColName()).append("=#{").append(col.getColName()).append("} ");
             }
             //insertStatements
-            insertBuilder.append("#{").append(col.getColName()).append("},");
+            if (isInSql(col.getDbColName().toLowerCase())) {
+                initBuilder.append(col.getDbColName()).append(",");
+                insertBuilder.append("#{").append(col.getColName()).append("},");
+                updateBuilder.append(col.getDbColName()).append("=#{").append(col.getColName()).append("},");
+            }
             //updateStatements
-            updateBuilder.append(col.getDbColName()).append("=#{").append(col.getColName()).append("},");
+
 
         }
         pkg.setInitSql(initBuilder.deleteCharAt(initBuilder.length()-1).toString());
@@ -105,6 +110,10 @@ public class ProcessData {
         pkg.setUpdateStatements(updateBuilder.deleteCharAt(updateBuilder.length()-1).toString());
         pkg.setImportSet(set);
         pkg.setColumnList(colList);
+    }
+
+    private static boolean isInSql(String lowerColName) {
+        return !notInSqlColumnList.contains(lowerColName);
     }
     
 }

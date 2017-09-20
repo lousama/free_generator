@@ -115,6 +115,7 @@ public class ProcessFile {
         if(dir.exists()){
             dir.delete();
         }
+
         if(!dir.exists()){
             dir.mkdirs();
         }

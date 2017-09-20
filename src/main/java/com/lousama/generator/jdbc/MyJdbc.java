@@ -76,7 +76,7 @@ public class MyJdbc {
         List<Table> tableList =  getSqlList();
         if(tableList != null && tableList.size() != 0){
             for (Table table : tableList) {
-                List<String> pkList = getPrimarkKeyList(table.getName().toUpperCase(),metaData);
+                List<String> pkList = getPrimaryKeyList(table.getName(),metaData);
                 st = conn.createStatement();
                 rs = st.executeQuery(table.getSql());
                 ResultSetMetaData meta = rs.getMetaData();
@@ -111,7 +111,7 @@ public class MyJdbc {
             if(tbName != null && !"".equals(tbName) && !",".equals(tbName)){
                 Table table = new Table();
                 table.setName(tbName);
-                table.setSql(SQL_PREFIX + tbName.toUpperCase() + sqlSuffix);
+                table.setSql(SQL_PREFIX + tbName + sqlSuffix);
                 list.add(table);
             }
         }
@@ -150,11 +150,11 @@ public class MyJdbc {
      * @return
      * @throws Exception
      */
-    private static List<String> getPrimarkKeyList(String tableName,DatabaseMetaData metaData) throws Exception{
+    private static List<String> getPrimaryKeyList(String tableName, DatabaseMetaData metaData) throws Exception{
         ResultSet rs = metaData.getPrimaryKeys("",schema,tableName);
         List<String> list = new ArrayList<>();
         while (rs.next()){
-            list.add(rs.getString("Column_name"));
+            list.add(rs.getString("Column_name").toUpperCase());
         }
         return list;
     }

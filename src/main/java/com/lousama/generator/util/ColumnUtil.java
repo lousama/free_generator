@@ -40,7 +40,7 @@ public class ColumnUtil {
                 || typeName.startsWith("DOUBLE") || typeName.startsWith("FLOAT")) && scale > 0){
             return DECIMAL;
         } else if (typeName.startsWith("TIMESTAMP") || typeName.startsWith("DATETIME")){
-            return TIMESTAMP;
+            return DATE;
         } else if (typeName.startsWith("DATE")){
             return DATE;
         } else {
